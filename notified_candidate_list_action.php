@@ -36,7 +36,7 @@ include('connection.php');
 			echo "Already confirmed";
 			}
 			else{
-				if($departure_time_check>$arrival_time_check && $arrival_date==$Date_of_travel)
+				if($departure_time_check>=$arrival_time_check && $arrival_date==$Date_of_travel)
 				{ echo "0";}
 			else{
                 $update = $db->secure_insert("sm_travelling_details", $values, "WHERE `candidate_id`='$candidate_id'");

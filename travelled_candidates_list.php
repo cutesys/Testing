@@ -1,8 +1,8 @@
 <?php
 $page = "recruitment";
-$tab = "CandidateTravel";
-$tab1= "CandidateTravelled";
-$sub = "travelled_candidates_list";
+$tab = "interview_process";
+$sub="CandidateTravel";
+$sub1= "travelled_candidates_list";
 include('file_parts/header.php');
 
 $empArray = array();
@@ -206,8 +206,8 @@ fclose($fp);
             <div class="modal-header">
                 <h3 class="modal-title custom-font">Sure To Remove This Record ?</h3>
             </div>
-            <input type="text" id="hid_del" value=""/>
-			<input type="text" id="hid_del" value=""/>
+            <input type="hidden" id="hid_del" value=""/>
+			
             <div class="modal-body">
             </div>
             <div class="modal-footer">
@@ -293,13 +293,13 @@ fclose($fp);
 								   <input type="text" name="qatar_id_issued_date" id="qatar_id_issued_date" class="form-control"/>
 								   <label>Qatar Id Expiry Date:</label>
 								   <input type="text" name="qatar_id_expiry_date" id="qatar_id_expiry_date" class="form-control"/>
-                                </div>
-                                
-                              <!--span class="error" id="error"></span-->
-								
-								<span class="error" id="error" style="margin-left:19px;"></span>
+								   
 								<input type="hidden" name="candidate_id" id ="candidate_id" value="" />
 								 <input type="hidden" name="medical_result" id ="medical_results" value="" />
+                                </div>
+                                
+                             
+								
                         </form>
                     </div>
                     <!-- The table listing the files available for upload/download -->
@@ -307,11 +307,8 @@ fclose($fp);
                 </div>
 				            </div>
  </div>
-                    <!-- The table listing the FILES available for upload/download -->
-                    <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
-					<span id ="succ" class="error form-control" ></span>
-                </div>
-            <div id="suc" style="color:green" class="form-control"></div>
+             <span class="error" id="error" style="margin-left:19px;color:green"></span>   
+            <div id="suc" style="color:green" ></div>
             <div class="modal-footer">
                 <button class="btn btn-default btn-border" id="sub_btn1">Yes</button>
                 <button class="btn btn-default btn-border" id ="cancel" data-dismiss="modal">Cancel</button>
@@ -463,7 +460,7 @@ $('#qatar_id_expiry_date').datepicker({dateFormat: 'dd-mm-yy', changeMonth: true
 						}
 						else{a=="";}
 					}
-                         d='<a onclick="delete_id(' + full.candidate_id + full.medical_status + ')" class="btn btn-xs btn-lightred" data-toggle="modal" data-target="#splash2" data-options="splash-ef-3"><i class="fa fa-times"></i> Delete</a>';
+                         d='<a onclick="delete_id(' + full.candidate_id +  ')" class="btn btn-xs btn-lightred" data-toggle="modal" data-target="#splash2" data-options="splash-ef-3"><i class="fa fa-times"></i> Delete</a>';
 						 return c+m+a+d;
                     }}
                
@@ -576,7 +573,7 @@ updateList = function () {
 				if($s==''||qatar_id_expiry_date==''||qatar_id_issued_date==''||qatar_id==''||qatar_id_expiry_date < qatar_id_issued_date){
 				if($s=='')
 			    {
-				$('#error').html("Select a certificates").fadeIn( 3000 ).delay( 1500 ).fadeOut( 4000 );
+				$('#error').html("Select Medical certificates").fadeIn( 3000 ).delay( 1500 ).fadeOut( 4000 );
 				}
 				
 			    if(qatar_id_expiry_date==''||qatar_id_issued_date==''||qatar_id=='')
@@ -586,8 +583,15 @@ updateList = function () {
 				
 				}
 				else{	
-				
-            $.ajax({
+				$.ajax({
+				url: "qatarid_upload.php",
+				type: "POST",
+				data: {medical_status: medical_status,candidate_id:candidate_id,qatar_id:qatar_id,qatar_id_issued_date:qatar_id_issued_date,qatar_id_expiry_date:qatar_id_expiry_date,edit_id:edit_id},
+				success: function (data) {
+					//alert(data);
+					if(data==='0'){$('#suc').html("Qatar ID Already Exists").fadeIn( 3000 ).delay( 1500 ).fadeOut( 4000 );}
+					else{
+						$.ajax({
                 url: "visa_certificate_upload.php?" + fdata + '&numf=' + numf + '&medical_status=' + medical_status + '&edit_id=' + edit_id  ,
                 type: "POST",
                 cache: false,
@@ -597,35 +601,34 @@ updateList = function () {
                 success: function (data) {
 					$('#succ').html(data).fadeIn( 3000 ).delay( 1500 ).fadeOut( 4000 );
 					if(edit_id>0){
-					$('#suc').html("updated succesfully").fadeIn( 3000 ).delay( 1500 ).fadeOut( 4000 );
+					$('#suc').html("Updated succesfully").fadeIn( 3000 ).delay( 1500 ).fadeOut( 4000 );
+					window.location = "travelled_candidates_list.php";
 					}
 					else{
-					$('#suc').html("successfull").fadeIn( 3000 ).delay( 1500 ).fadeOut( 4000 );
+					$('#suc').html("Successfull").fadeIn( 3000 ).delay( 1500 ).fadeOut( 4000 );
+					window.location = "travelled_candidates_list.php";
 					}
 					//alert(data);
-					window.location = "travelled_candidates_list.php";
+					
                     }
 				});
 			
+				//$('#qatar_id').html(data).fadeIn( 3000 ).delay( 1500 ).fadeOut( 4000 );
+				if(edit_id>0){
+					$('#suc').html("Updated succesfully").fadeIn( 3000 ).delay( 1500 ).fadeOut( 4000 );
+					}
+					else{
+				$('#suc').html("Successfull").fadeIn( 3000 ).delay( 1500 ).fadeOut( 4000 );
+					}
+				//alert(data);
+				//window.location = "travelled_candidates_list.php";
+				}}
+				});
+            
 			
 			//else{
 				
-				$.ajax({
-				url: "qatarid_upload.php",
-				type: "POST",
-				data: {medical_status: medical_status,candidate_id:candidate_id,qatar_id:qatar_id,qatar_id_issued_date:qatar_id_issued_date,qatar_id_expiry_date:qatar_id_expiry_date,edit_id:edit_id},
-				success: function (data) {
-				$('#qatar_id').html(data).fadeIn( 3000 ).delay( 1500 ).fadeOut( 4000 );
-				if(edit_id>0){
-					$('#suc').html("updated succesfully").fadeIn( 3000 ).delay( 1500 ).fadeOut( 4000 );
-					}
-					else{
-				$('#suc').html("successfull").fadeIn( 3000 ).delay( 1500 ).fadeOut( 4000 );
-					}
-				//alert(data);
-				window.location = "travelled_candidates_list.php";
-				}
-				});
+				
 				//}
 			}
 			
@@ -633,7 +636,7 @@ updateList = function () {
 			else{
 				if($s=='' && medical_status!=='Pending' )
 			    {
-				$('#error1').html("Select a certificate").fadeIn( 3000 ).delay( 1500 ).fadeOut( 4000 );
+				$('#error1').html("Select Medical Certificates").fadeIn( 3000 ).delay( 1500 ).fadeOut( 4000 );
 				}
 				else{
 					
@@ -667,12 +670,13 @@ updateList = function () {
     }
     $('#del_btn').click(function () {
         var pass_val = $('#hid_del').val();
-		
+		//alert(pass_val);
         $.ajax({
             url: "delete_travelled_candidate.php",
             type: "POST",
             data: {pass_val: pass_val},
             success: function (data) {
+				//alert(data);
                 window.location = "travelling_candidates_list.php";
             }
         });

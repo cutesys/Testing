@@ -1,7 +1,8 @@
 <?php
 $page = "recruitment";
-$tab = "CandidateTravel";
-$sub = "notified_candidate_list";
+$tab="interview_process";
+$sub = "CandidateTravel";
+$sub1 = "notified_candidate_list";
 include('file_parts/header.php');
 
 $empArray = array();
@@ -154,7 +155,7 @@ fclose($fp);
       </div>
       <div class="modal-body"> <span class="error" id="error" ></span> </div>
       
-     <div id="succ" style="color:green" class="form-control"></div>
+     <div id="succ" style="color:green"></div>
       <div class="modal-footer">
         <button class="btn btn-default btn-border" id="sub_btn">Submit</button>
         <button class="btn btn-default btn-border" id ="cancel" data-dismiss="modal">Cancel</button>
@@ -353,7 +354,7 @@ else{
             success: function (data) {
 				//alert(data);
 				if(data==0){
-				 $('#succ').html("Invalid").fadeOut(30000);
+				 $('#succ').html("Invalid Time").fadeOut(30000);
 				}
 				else if(data==1){
 					$('#succ').html("Added Successfully").fadeOut(30000);
