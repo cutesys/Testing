@@ -13,7 +13,7 @@ if (isset($_POST['agent_phone'])) {
 	$agent_email = $_POST['agent_email'];
 	//$ = $_POST[''];
 	//$ = $_POST[''];
-	
+	//testinggggg   commiitt
     $result = array();
    // $check_id = $db->selectQuery("select * from sm_recruitment_agents where agent_country='$agent_country' and agent_place='$agent_place' and agent_status='1'");
    //$check_id = $db->selectQuery("select * from sm_recruitment_agents where agent_id='$agent_id' agent_status='1'");
