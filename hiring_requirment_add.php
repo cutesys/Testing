@@ -7,7 +7,7 @@ $sub = "external_requirements";
 $sub1 = "external_list";
 include('file_parts/header.php');
 
-
+//editing
 
 if (isset($_REQUEST['uid'])) {
     $uid = $_REQUEST['uid'];
