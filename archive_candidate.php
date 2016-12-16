@@ -19,6 +19,7 @@ if (count($resFet)) {
         $cmpArray["data"][] = $values;
     }
 }
+//testing anson
 $fp = fopen('assets/extras/company.json', 'w');
 fwrite($fp, json_encode($cmpArray));
 fclose($fp);
