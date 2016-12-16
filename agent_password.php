@@ -28,12 +28,12 @@ if (isset($_POST['save'])) {
 	$agent_user=$vals['agent_username'] = $_POST['agent_username'];
 	$vals['agent_password'] = $_POST['agent_password'];
 	$resAge = $db->selectQuery("SELECT * FROM `sm_recruitment_agents` WHERE `agent_username`='$agent_user' and agent_id!='$id'");
-if (count($resAge)>0) 
-{
-	$success="Username Exists";
-}
-    else
-{
+// if (count($resAge)>0) 
+// {
+	// $success="Username Exists";
+// }
+    // else
+// {
    
     $suc=$db->secure_update("sm_recruitment_agents", $vals, "WHERE `agent_id`='$id' and `agent_status`=1");
     if(count($suc)>0)
@@ -46,7 +46,8 @@ if (count($resAge)>0)
 		$success="Error in updation";
 	}
 	
-}}
+}
+//}
 ?>
 
 <!-- ====================================================

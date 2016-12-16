@@ -1,9 +1,9 @@
 <?php
 $success_msg="";
-$page = "settings";
-$tab = "recruit";
-$sub = "categ";
-$sub1 = "categ_list";
+$page = "recruitment";
+$tab = "recruit_settings";
+$sub = "recruit_category";
+$sub1 = "recruit_category_list";
 include('file_parts/header.php');
 
 ?>
@@ -264,7 +264,7 @@ $('#job_category_name').on('blur', function (e) {
         var job_position = jQuery('#job_position').val();
 		 var job_category_name = jQuery('#job_category_name').val();
 		var edit_id = jQuery('#edit_id').val();
-        $('#com_status').html('Please wait...');
+        //$('#com_status').html('Please wait...').fadeOut(100);
         $.ajax({
             url: 'category_edit_check.php',
             type: 'POST',
